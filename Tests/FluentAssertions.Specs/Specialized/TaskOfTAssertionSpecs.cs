@@ -13,8 +13,7 @@ namespace FluentAssertions.Specs.Specialized
 {
     public class TaskOfTAssertionSpecs
     {
-        #region CompleteWithinAsync
-
+        #region CompleteWithin
         [Fact]
         public async Task When_subject_is_null_when_expecting_to_complete_async_it_should_throw()
         {
@@ -23,11 +22,11 @@ namespace FluentAssertions.Specs.Specialized
             Func<Task<int>> action = null;
 
             // Act
-            Func<Task> testAction = () => action.Should().CompleteWithinAsync(
+            Func<Task> testAction = () => action.Should().CompleteWithin(
                 timeSpan, "because we want to test the failure {0}", "message");
 
             // Assert
-            await testAction.Should().ThrowAsync<XunitException>()
+            await testAction.Should().Throw<XunitException>()
                 .WithMessage("*because we want to test the failure message*found <null>*");
         }
 
@@ -43,7 +42,7 @@ namespace FluentAssertions.Specs.Specialized
             {
                 Func<Task<int>> func = () => taskFactory.Task;
 
-                (await func.Should(timer).CompleteWithinAsync(100.Milliseconds()))
+                (await func.Should(timer).CompleteWithin(100.Milliseconds()))
                     .Which.Should().Be(42);
             };
 
@@ -51,7 +50,7 @@ namespace FluentAssertions.Specs.Specialized
             timer.Complete();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -66,7 +65,7 @@ namespace FluentAssertions.Specs.Specialized
             {
                 Func<Task<int>> funcSubject = () => taskFactory.Task;
 
-                (await funcSubject.Should(timer).CompleteWithinAsync(100.Milliseconds()))
+                (await funcSubject.Should(timer).CompleteWithin(100.Milliseconds()))
                     .Which.Should().Be(42);
             };
 
@@ -76,7 +75,7 @@ namespace FluentAssertions.Specs.Specialized
             // Assert
             // TODO message currently shows "Expected (await funcSubject to be...", but should be "Expected funcSubject to be...",
             // maybe with or without await.
-            await action.Should().ThrowAsync<XunitException>().WithMessage("*to be 42, but found 99.");
+            await action.Should().Throw<XunitException>().WithMessage("*to be 42, but found 99.");
         }
 
         [Fact]
@@ -91,14 +90,14 @@ namespace FluentAssertions.Specs.Specialized
             {
                 Func<Task<int>> funcSubject = () => taskFactory.Task;
 
-                await funcSubject.Should(timer).CompleteWithinAsync(100.Milliseconds()).WithResult(42);
+                await funcSubject.Should(timer).CompleteWithin(100.Milliseconds()).WithResult(42);
             };
 
             taskFactory.SetResult(99);
             timer.Complete();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>().WithMessage("Expected funcSubject to be 42, but found 99.");
+            await action.Should().Throw<XunitException>().WithMessage("Expected funcSubject to be 42, but found 99.");
         }
 
         [Fact]
@@ -113,19 +112,18 @@ namespace FluentAssertions.Specs.Specialized
             {
                 Func<Task<int>> func = () => taskFactory.Task;
 
-                return func.Should(timer).CompleteWithinAsync(100.Milliseconds());
+                return func.Should(timer).CompleteWithin(100.Milliseconds());
             };
 
             timer.Complete();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>();
+            await action.Should().Throw<XunitException>();
         }
 
         #endregion
 
-        #region NotThrowAfterAsync
-
+        #region NotThrowAfter
         [Fact]
         public async Task When_subject_is_null_when_expecting_to_not_throw_async_it_should_throw()
         {
@@ -133,11 +131,11 @@ namespace FluentAssertions.Specs.Specialized
             Func<Task<int>> action = null;
 
             // Act
-            Func<Task> testAction = () => action.Should().NotThrowAsync(
+            Func<Task> testAction = () => action.Should().NotThrow(
                 "because we want to test the failure {0}", "message");
 
             // Assert
-            await testAction.Should().ThrowAsync<XunitException>()
+            await testAction.Should().Throw<XunitException>()
                 .WithMessage("*because we want to test the failure message*found <null>*");
         }
 
@@ -153,7 +151,7 @@ namespace FluentAssertions.Specs.Specialized
             {
                 Func<Task<int>> func = () => taskFactory.Task;
 
-                (await func.Should(timer).NotThrowAsync())
+                (await func.Should(timer).NotThrow())
                     .Which.Should().Be(42);
             };
 
@@ -161,7 +159,7 @@ namespace FluentAssertions.Specs.Specialized
             timer.Complete();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [UIFact]
@@ -176,7 +174,7 @@ namespace FluentAssertions.Specs.Specialized
             {
                 Func<Task<int>> func = () => taskFactory.Task;
 
-                (await func.Should(timer).NotThrowAsync())
+                (await func.Should(timer).NotThrow())
                     .Which.Should().Be(42);
             };
 
@@ -184,7 +182,7 @@ namespace FluentAssertions.Specs.Specialized
             timer.Complete();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -198,11 +196,11 @@ namespace FluentAssertions.Specs.Specialized
             {
                 Func<Task<int>> func = () => throw new AggregateException();
 
-                return func.Should(timer).NotThrowAsync();
+                return func.Should(timer).NotThrow();
             };
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>();
+            await action.Should().Throw<XunitException>();
         }
 
         [UIFact]
@@ -216,11 +214,11 @@ namespace FluentAssertions.Specs.Specialized
             {
                 Func<Task<int>> func = () => throw new AggregateException();
 
-                return func.Should(timer).NotThrowAsync();
+                return func.Should(timer).NotThrow();
             };
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>();
+            await action.Should().Throw<XunitException>();
         }
 
         [Fact]
@@ -232,11 +230,11 @@ namespace FluentAssertions.Specs.Specialized
             Func<Task<int>> action = null;
 
             // Act
-            Func<Task> testAction = () => action.Should().NotThrowAfterAsync(
+            Func<Task> testAction = () => action.Should().NotThrowAfter(
                 waitTime, pollInterval, "because we want to test the failure {0}", "message");
 
             // Assert
-            await testAction.Should().ThrowAsync<XunitException>()
+            await testAction.Should().Throw<XunitException>()
                 .WithMessage("*because we want to test the failure message*found <null>*");
         }
 
@@ -251,10 +249,10 @@ namespace FluentAssertions.Specs.Specialized
             Func<Task<int>> someFunc = () => asyncObject.ReturnTaskInt();
 
             // Act
-            Func<Task> act = () => someFunc.Should().NotThrowAfterAsync(waitTime, pollInterval);
+            Func<Task> act = () => someFunc.Should().NotThrowAfter(waitTime, pollInterval);
 
             // Assert
-            await act.Should().ThrowAsync<ArgumentOutOfRangeException>()
+            await act.Should().Throw<ArgumentOutOfRangeException>()
                 .WithMessage("* value of waitTime must be non-negative*");
         }
 
@@ -269,10 +267,10 @@ namespace FluentAssertions.Specs.Specialized
             Func<Task<int>> someFunc = () => asyncObject.ReturnTaskInt();
 
             // Act
-            Func<Task> act = () => someFunc.Should().NotThrowAfterAsync(waitTime, pollInterval);
+            Func<Task> act = () => someFunc.Should().NotThrowAfter(waitTime, pollInterval);
 
             // Assert
-            await act.Should().ThrowAsync<ArgumentOutOfRangeException>()
+            await act.Should().Throw<ArgumentOutOfRangeException>()
                 .WithMessage("* value of pollInterval must be non-negative*");
         }
 
@@ -287,10 +285,10 @@ namespace FluentAssertions.Specs.Specialized
 
             // Act
             Func<Task> action = () => func.Should()
-                .NotThrowAfterAsync(waitTime, pollInterval, "we passed valid arguments");
+                .NotThrowAfter(waitTime, pollInterval, "we passed valid arguments");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("*but found <null>*");
         }
 
@@ -318,10 +316,10 @@ namespace FluentAssertions.Specs.Specialized
 
             // Act
             Func<Task> action = () => throwLongerThanWaitTime.Should(clock)
-                .NotThrowAfterAsync(waitTime, pollInterval, "we passed valid arguments");
+                .NotThrowAfter(waitTime, pollInterval, "we passed valid arguments");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Did not expect any exceptions after 2s because we passed valid arguments*");
         }
 
@@ -349,10 +347,10 @@ namespace FluentAssertions.Specs.Specialized
 
             // Act
             Func<Task> action = () => throwLongerThanWaitTime.Should(clock)
-                .NotThrowAfterAsync(waitTime, pollInterval, "we passed valid arguments");
+                .NotThrowAfter(waitTime, pollInterval, "we passed valid arguments");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Did not expect any exceptions after 2s because we passed valid arguments*");
         }
 
@@ -381,12 +379,12 @@ namespace FluentAssertions.Specs.Specialized
             // Act
             Func<Task> act = async () =>
             {
-                (await throwShorterThanWaitTime.Should(clock).NotThrowAfterAsync(waitTime, pollInterval))
+                (await throwShorterThanWaitTime.Should(clock).NotThrowAfter(waitTime, pollInterval))
                     .Which.Should().Be(42);
             };
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().NotThrow();
         }
 
         [UIFact]
@@ -414,12 +412,12 @@ namespace FluentAssertions.Specs.Specialized
             // Act
             Func<Task> act = async () =>
             {
-                (await throwShorterThanWaitTime.Should(clock).NotThrowAfterAsync(waitTime, pollInterval))
+                (await throwShorterThanWaitTime.Should(clock).NotThrowAfter(waitTime, pollInterval))
                     .Which.Should().Be(42);
             };
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().NotThrow();
         }
 
         #endregion

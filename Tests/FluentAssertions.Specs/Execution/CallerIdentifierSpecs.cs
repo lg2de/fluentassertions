@@ -62,12 +62,12 @@ namespace FluentAssertions.Specs.Execution
             var timer = new FakeClock();
 
             // Act
-            Func<Task> action = () => bob.Should(timer).NotCompleteWithinAsync(1.Seconds(), "test {0}", "testArg");
+            Func<Task> action = () => bob.Should(timer).NotCompleteWithin(1.Seconds(), "test {0}", "testArg");
             bob.SetResult(true);
             timer.Complete();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Expected bob to not complete within 1s because test testArg.");
         }
 

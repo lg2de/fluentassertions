@@ -33,11 +33,11 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = null;
 
             // Act
-            Func<Task> testAction = () => action.Should().ThrowAsync<ArgumentException>(
+            Func<Task> testAction = () => action.Should().Throw<ArgumentException>(
                 "because we want to test the failure {0}", "message");
 
             // Assert
-            await testAction.Should().ThrowAsync<XunitException>()
+            await testAction.Should().Throw<XunitException>()
                 .WithMessage("*because we want to test the failure message*found <null>*");
         }
 
@@ -48,11 +48,11 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = null;
 
             // Act
-            Func<Task> testAction = () => action.Should().NotThrowAsync<ArgumentException>(
+            Func<Task> testAction = () => action.Should().NotThrow<ArgumentException>(
                 "because we want to test the failure {0}", "message");
 
             // Assert
-            await testAction.Should().ThrowAsync<XunitException>()
+            await testAction.Should().Throw<XunitException>()
                 .WithMessage("*because we want to test the failure message*found <null>*");
         }
 
@@ -63,11 +63,11 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = null;
 
             // Act
-            Func<Task> testAction = () => action.Should().NotThrowAsync(
+            Func<Task> testAction = () => action.Should().NotThrow(
                 "because we want to test the failure {0}", "message");
 
             // Assert
-            await testAction.Should().ThrowAsync<XunitException>()
+            await testAction.Should().Throw<XunitException>()
                 .WithMessage("*because we want to test the failure message*found <null>*");
         }
 
@@ -78,10 +78,10 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> act = () => throw new AggregateException();
 
             // Act
-            Func<Task> act2 = () => act.Should().NotThrowAsync();
+            Func<Task> act2 = () => act.Should().NotThrow();
 
             // Assert
-            await act2.Should().ThrowAsync<XunitException>();
+            await act2.Should().Throw<XunitException>();
         }
 
         [UIFact]
@@ -91,10 +91,10 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> act = () => throw new AggregateException();
 
             // Act
-            Func<Task> act2 = () => act.Should().NotThrowAsync();
+            Func<Task> act2 = () => act.Should().NotThrow();
 
             // Assert
-            await act2.Should().ThrowAsync<XunitException>();
+            await act2.Should().Throw<XunitException>();
         }
 
         [Fact]
@@ -104,7 +104,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> act = () => throw new AggregateException(new ArgumentException("That was wrong."));
 
             // Act & Assert
-            await act.Should().ThrowAsync<ArgumentException>().WithMessage("That was wrong.");
+            await act.Should().Throw<ArgumentException>().WithMessage("That was wrong.");
         }
 
         [UIFact]
@@ -114,7 +114,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> act = () => throw new AggregateException(new ArgumentException("That was wrong."));
 
             // Act & Assert
-            await act.Should().ThrowAsync<ArgumentException>().WithMessage("That was wrong.");
+            await act.Should().Throw<ArgumentException>().WithMessage("That was wrong.");
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> act = () => throw new AggregateException("That was wrong as well.");
 
             // Act & Assert
-            await act.Should().ThrowAsync<AggregateException>().WithMessage("That was wrong as well.");
+            await act.Should().Throw<AggregateException>().WithMessage("That was wrong as well.");
         }
 
         [Fact]
@@ -134,7 +134,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> act = () => throw new AggregateException(new ArgumentException("That was wrong."));
 
             // Act & Assert
-            await act.Should().ThrowAsync<ArgumentException>()
+            await act.Should().Throw<ArgumentException>()
                 .Where(i => i.Message == "That was wrong.");
         }
 
@@ -145,7 +145,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> act = () => throw new AggregateException("That was wrong as well.");
 
             // Act & Assert
-            await act.Should().ThrowAsync<AggregateException>()
+            await act.Should().Throw<AggregateException>()
                 .Where(i => i.Message == "That was wrong as well.");
         }
 
@@ -156,7 +156,7 @@ namespace FluentAssertions.Specs.Exceptions
             where T : Exception
         {
             // Act/Assert
-            await action.Should().ThrowAsync<T>();
+            await action.Should().Throw<T>();
         }
 
         [UITheory]
@@ -165,7 +165,7 @@ namespace FluentAssertions.Specs.Exceptions
             where T : Exception
         {
             // Act/Assert
-            await action.Should().ThrowAsync<T>();
+            await action.Should().Throw<T>();
         }
 
         [Theory]
@@ -174,10 +174,10 @@ namespace FluentAssertions.Specs.Exceptions
             where T : Exception
         {
             // Act
-            Func<Task> act2 = () => action.Should().NotThrowAsync<T>();
+            Func<Task> act2 = () => action.Should().NotThrow<T>();
 
             // Assert
-            await act2.Should().ThrowAsync<XunitException>();
+            await act2.Should().Throw<XunitException>();
         }
 
         [UITheory]
@@ -186,10 +186,10 @@ namespace FluentAssertions.Specs.Exceptions
             where T : Exception
         {
             // Act
-            Func<Task> act2 = () => action.Should().NotThrowAsync<T>();
+            Func<Task> act2 = () => action.Should().NotThrow<T>();
 
             // Assert
-            await act2.Should().ThrowAsync<XunitException>();
+            await act2.Should().Throw<XunitException>();
         }
 #pragma warning restore xUnit1026 // Theory methods should use all of their parameters
 
@@ -256,10 +256,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsync<ArgumentNullException>())
-                .Should().ThrowExactlyAsync<ArgumentException>("because {0} should do that", "IFoo.Do");
+                .Should().ThrowExactly<ArgumentException>("because {0} should do that", "IFoo.Do");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Expected type to be System.ArgumentException because IFoo.Do should do that, but found System.ArgumentNullException.");
         }
 
@@ -272,10 +272,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsyncValueTask<ArgumentNullException>())
-                .Should().ThrowExactlyAsync<ArgumentException>("because {0} should do that", "IFoo.Do");
+                .Should().ThrowExactly<ArgumentException>("because {0} should do that", "IFoo.Do");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Expected type to be System.ArgumentException because IFoo.Do should do that, but found System.ArgumentNullException.");
         }
 
@@ -288,10 +288,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAggregateExceptionAsync<ArgumentException>())
-                .Should().ThrowExactlyAsync<ArgumentException>("because {0} should do that", "IFoo.Do");
+                .Should().ThrowExactly<ArgumentException>("because {0} should do that", "IFoo.Do");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Expected type to be System.ArgumentException because IFoo.Do should do that, but found System.AggregateException.");
         }
 
@@ -304,10 +304,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAggregateExceptionAsyncValueTask<ArgumentException>())
-                .Should().ThrowExactlyAsync<ArgumentException>("because {0} should do that", "IFoo.Do");
+                .Should().ThrowExactly<ArgumentException>("because {0} should do that", "IFoo.Do");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Expected type to be System.ArgumentException because IFoo.Do should do that, but found System.AggregateException.");
         }
 
@@ -320,7 +320,7 @@ namespace FluentAssertions.Specs.Exceptions
             // Act / Assert
             await asyncObject
                 .Awaiting(x => x.ThrowAsync<ArgumentNullException>())
-                .Should().ThrowExactlyAsync<ArgumentNullException>();
+                .Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Fact]
@@ -332,7 +332,7 @@ namespace FluentAssertions.Specs.Exceptions
             // Act / Assert
             await asyncObject
                 .Awaiting(x => x.ThrowAsyncValueTask<ArgumentNullException>())
-                .Should().ThrowExactlyAsync<ArgumentNullException>();
+                .Should().ThrowExactly<ArgumentNullException>();
         }
 
         [Fact]
@@ -344,10 +344,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsync<ArgumentException>())
-                .Should().ThrowAsync<ArgumentException>();
+                .Should().Throw<ArgumentException>();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -359,10 +359,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsyncValueTask<ArgumentException>())
-                .Should().ThrowAsync<ArgumentException>();
+                .Should().Throw<ArgumentException>();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -372,10 +372,10 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> subject = null;
 
             // Act
-            Func<Task> action = () => subject.Should().NotThrowAsync();
+            Func<Task> action = () => subject.Should().NotThrow();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("*found <null>*");
         }
 
@@ -389,7 +389,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = () => asyncObject.ThrowAsync<ArgumentException>();
 
             // Assert
-            await action.Should().ThrowAsync<ArgumentException>();
+            await action.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -401,10 +401,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.SucceedAsync())
-                .Should().ThrowAsync<InvalidOperationException>("because {0} should do that", "IFoo.Do");
+                .Should().Throw<InvalidOperationException>("because {0} should do that", "IFoo.Do");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Expected a <System.InvalidOperationException> to be thrown because IFoo.Do should do that, but no exception was thrown.");
         }
 
@@ -417,10 +417,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.SucceedAsyncValueTask())
-                .Should().ThrowAsync<InvalidOperationException>("because {0} should do that", "IFoo.Do");
+                .Should().Throw<InvalidOperationException>("because {0} should do that", "IFoo.Do");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Expected a <System.InvalidOperationException> to be thrown because IFoo.Do should do that, but no exception was thrown.");
         }
 
@@ -433,10 +433,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsync<ArgumentException>())
-                .Should().ThrowAsync<InvalidOperationException>("because {0} should do that", "IFoo.Do");
+                .Should().Throw<InvalidOperationException>("because {0} should do that", "IFoo.Do");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Expected a <System.InvalidOperationException> to be thrown because IFoo.Do should do that, but found <System.ArgumentException>*");
         }
 
@@ -449,10 +449,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsyncValueTask<ArgumentException>())
-                .Should().ThrowAsync<InvalidOperationException>("because {0} should do that", "IFoo.Do");
+                .Should().Throw<InvalidOperationException>("because {0} should do that", "IFoo.Do");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Expected a <System.InvalidOperationException> to be thrown because IFoo.Do should do that, but found <System.ArgumentException>*");
         }
 
@@ -465,10 +465,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.SucceedAsync())
-                .Should().NotThrowAsync();
+                .Should().NotThrow();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -480,10 +480,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.SucceedAsyncValueTask())
-                .Should().NotThrowAsync();
+                .Should().NotThrow();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -496,7 +496,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = () => asyncObject.SucceedAsync();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [UIFact]
@@ -509,7 +509,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = () => asyncObject.SucceedAsync();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -522,7 +522,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = () => asyncObject.ThrowAsync<ArgumentNullException>();
 
             // Assert
-            await action.Should().ThrowAsync<ArgumentException>("because {0} should do that", "IFoo.Do");
+            await action.Should().Throw<ArgumentException>("because {0} should do that", "IFoo.Do");
         }
 
         [Fact]
@@ -533,7 +533,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task<int>> f = () => asyncObject.ThrowTaskIntAsync<ArgumentNullException>(true);
 
             // Act / Assert
-            await f.Should().ThrowAsync<ArgumentNullException>();
+            await f.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -544,7 +544,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task<int>> f = () => asyncObject.ThrowTaskIntAsync<InvalidOperationException>(true);
 
             // Act / Assert
-            await f.Should().NotThrowAsync<ArgumentNullException>();
+            await f.Should().NotThrow<ArgumentNullException>();
         }
 
         [Fact]
@@ -554,11 +554,11 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = null;
 
             // Act
-            Func<Task> testAction = () => action.Should().ThrowExactlyAsync<ArgumentException>(
+            Func<Task> testAction = () => action.Should().ThrowExactly<ArgumentException>(
                 "because we want to test the failure {0}", "message");
 
             // Assert
-            await testAction.Should().ThrowAsync<XunitException>()
+            await testAction.Should().Throw<XunitException>()
                 .WithMessage("*because we want to test the failure message*found <null>*");
         }
 
@@ -570,10 +570,10 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> action = () => asyncObject.ThrowAsync<ArgumentNullException>();
-            Func<Task> testAction = () => action.Should().ThrowExactlyAsync<ArgumentException>("ABCDE");
+            Func<Task> testAction = () => action.Should().ThrowExactly<ArgumentException>("ABCDE");
 
             // Assert
-            await testAction.Should().ThrowAsync<XunitException>()
+            await testAction.Should().Throw<XunitException>()
                 .WithMessage("*ArgumentException*ABCDE*ArgumentNullException*");
         }
 
@@ -585,10 +585,10 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> action = () => asyncObject.ThrowAggregateExceptionAsync<ArgumentException>();
-            Func<Task> testAction = () => action.Should().ThrowExactlyAsync<ArgumentException>("ABCDE");
+            Func<Task> testAction = () => action.Should().ThrowExactly<ArgumentException>("ABCDE");
 
             // Assert
-            await testAction.Should().ThrowAsync<XunitException>()
+            await testAction.Should().Throw<XunitException>()
                 .WithMessage("*ArgumentException*ABCDE*AggregateException*");
         }
 
@@ -602,7 +602,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = () => asyncObject.ThrowAsync<ArgumentException>();
 
             // Assert
-            await action.Should().ThrowExactlyAsync<ArgumentException>("because {0} should do that", "IFoo.Do");
+            await action.Should().ThrowExactly<ArgumentException>("because {0} should do that", "IFoo.Do");
         }
 
         [UIFact]
@@ -615,7 +615,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = () => asyncObject.ThrowAsync<ArgumentException>();
 
             // Assert
-            await action.Should().ThrowExactlyAsync<ArgumentException>("because {0} should do that", "IFoo.Do");
+            await action.Should().ThrowExactly<ArgumentException>("because {0} should do that", "IFoo.Do");
         }
 
         [Fact]
@@ -627,10 +627,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsync<ArgumentException>())
-                .Should().NotThrowAsync();
+                .Should().NotThrow();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Did not expect any exception, but found System.ArgumentException*");
         }
 
@@ -643,10 +643,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsyncValueTask<ArgumentException>())
-                .Should().NotThrowAsync();
+                .Should().NotThrow();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Did not expect any exception, but found System.ArgumentException*");
         }
 
@@ -659,10 +659,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsync<ArgumentException>())
-                .Should().NotThrowAsync<InvalidOperationException>();
+                .Should().NotThrow<InvalidOperationException>();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -674,10 +674,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsyncValueTask<ArgumentException>())
-                .Should().NotThrowAsync<InvalidOperationException>();
+                .Should().NotThrow<InvalidOperationException>();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -690,7 +690,7 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = () => asyncObject.ThrowAsync<ArgumentException>();
 
             // Assert
-            await action.Should().NotThrowAsync<InvalidOperationException>();
+            await action.Should().NotThrow<InvalidOperationException>();
         }
 
         [Fact]
@@ -702,10 +702,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(_ => asyncObject.SucceedAsync())
-                .Should().NotThrowAsync<InvalidOperationException>();
+                .Should().NotThrow<InvalidOperationException>();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -717,10 +717,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(_ => asyncObject.SucceedAsyncValueTask())
-                .Should().NotThrowAsync<InvalidOperationException>();
+                .Should().NotThrow<InvalidOperationException>();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -732,10 +732,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsync<ArgumentException>())
-                .Should().NotThrowAsync<ArgumentException>();
+                .Should().NotThrow<ArgumentException>();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Did not expect System.ArgumentException, but found*");
         }
 
@@ -748,10 +748,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowAsyncValueTask<ArgumentException>())
-                .Should().NotThrowAsync<ArgumentException>();
+                .Should().NotThrow<ArgumentException>();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Did not expect System.ArgumentException, but found*");
         }
 
@@ -764,10 +764,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(_ => asyncObject.ReturnTaskInt())
-                .Should().NotThrowAsync<InvalidOperationException>();
+                .Should().NotThrow<InvalidOperationException>();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -779,10 +779,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(_ => asyncObject.ReturnValueTaskInt())
-                .Should().NotThrowAsync<InvalidOperationException>();
+                .Should().NotThrow<InvalidOperationException>();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -794,10 +794,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowTaskIntAsync<ArgumentException>(true))
-                .Should().NotThrowAsync<ArgumentException>();
+                .Should().NotThrow<ArgumentException>();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Did not expect System.ArgumentException, but found System.ArgumentException*");
         }
 
@@ -810,10 +810,10 @@ namespace FluentAssertions.Specs.Exceptions
             // Act
             Func<Task> action = () => asyncObject
                 .Awaiting(x => x.ThrowValueTaskIntAsync<ArgumentException>(true))
-                .Should().NotThrowAsync<ArgumentException>();
+                .Should().NotThrow<ArgumentException>();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Did not expect System.ArgumentException, but found System.ArgumentException*");
         }
 
@@ -825,11 +825,11 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> action = () => task
-                .Should().ThrowAsync<AggregateException>()
+                .Should().Throw<AggregateException>()
                 .WithInnerException<AggregateException, InvalidOperationException>();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -840,10 +840,10 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> action = () => task
-                .Should().ThrowAsync<InvalidOperationException>();
+                .Should().Throw<InvalidOperationException>();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -854,10 +854,10 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> action = () => task
-                .Should().ThrowAsync<InvalidOperationException>();
+                .Should().Throw<InvalidOperationException>();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.Should().NotThrow();
         }
 
         [Fact]
@@ -868,11 +868,11 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> action = () => task
-                .Should().ThrowAsync<AggregateException>()
+                .Should().Throw<AggregateException>()
                 .WithInnerException<AggregateException, InvalidOperationException>();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>().WithMessage("*InvalidOperation*Argument*");
+            await action.Should().Throw<XunitException>().WithMessage("*InvalidOperation*Argument*");
         }
 
         [Fact]
@@ -883,10 +883,10 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> action = () => task
-                .Should().ThrowAsync<InvalidOperationException>();
+                .Should().Throw<InvalidOperationException>();
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>().WithMessage("*InvalidOperation*Argument*");
+            await action.Should().Throw<XunitException>().WithMessage("*InvalidOperation*Argument*");
         }
 
         [Fact]
@@ -953,11 +953,11 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> act = () =>
-                task.Should().ThrowAsync<ArgumentException>()
+                task.Should().Throw<ArgumentException>()
                     .WithParameterName("someParameter");
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().NotThrow();
         }
 
         [Fact]
@@ -968,15 +968,15 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> act = () =>
-                task.Should().ThrowAsync<ArgumentException>()
+                task.Should().Throw<ArgumentException>()
                     .WithParameterName("someParameter", "we want to test the failure {0}", "message");
 
             // Assert
-            await act.Should().ThrowAsync<XunitException>()
+            await act.Should().Throw<XunitException>()
                 .WithMessage("*with parameter name \"someParameter\"*we want to test the failure message*\"someOtherParameter\"*");
         }
 
-        #region NotThrowAfterAsync
+        #region NotThrowAfter
         [Fact]
         public async Task When_wait_time_is_zero_for_async_func_executed_with_wait_it_should_not_throw()
         {
@@ -989,10 +989,10 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> someFunc = () => asyncObject.SucceedAsync();
 
             // Act
-            Func<Task> act = () => someFunc.Should(clock).NotThrowAfterAsync(waitTime, pollInterval);
+            Func<Task> act = () => someFunc.Should(clock).NotThrowAfter(waitTime, pollInterval);
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().NotThrow();
         }
 
         [Fact]
@@ -1007,10 +1007,10 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> someFunc = () => asyncObject.SucceedAsync();
 
             // Act
-            Func<Task> act = () => someFunc.Should(clock).NotThrowAfterAsync(waitTime, pollInterval);
+            Func<Task> act = () => someFunc.Should(clock).NotThrowAfter(waitTime, pollInterval);
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().NotThrow();
         }
 
         [Fact]
@@ -1022,11 +1022,11 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> action = null;
 
             // Act
-            Func<Task> testAction = () => action.Should().NotThrowAfterAsync(
+            Func<Task> testAction = () => action.Should().NotThrowAfter(
                 waitTime, pollInterval, "because we want to test the failure {0}", "message");
 
             // Assert
-            await testAction.Should().ThrowAsync<XunitException>()
+            await testAction.Should().Throw<XunitException>()
                 .WithMessage("*because we want to test the failure message*found <null>*");
         }
 
@@ -1041,10 +1041,10 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> someFunc = () => asyncObject.SucceedAsync();
 
             // Act
-            Func<Task> act = () => someFunc.Should().NotThrowAfterAsync(waitTime, pollInterval);
+            Func<Task> act = () => someFunc.Should().NotThrowAfter(waitTime, pollInterval);
 
             // Assert
-            await act.Should().ThrowAsync<ArgumentOutOfRangeException>()
+            await act.Should().Throw<ArgumentOutOfRangeException>()
                 .WithMessage("* value of waitTime must be non-negative*");
         }
 
@@ -1059,10 +1059,10 @@ namespace FluentAssertions.Specs.Exceptions
             Func<Task> someFunc = () => asyncObject.SucceedAsync();
 
             // Act
-            Func<Task> act = () => someFunc.Should().NotThrowAfterAsync(waitTime, pollInterval);
+            Func<Task> act = () => someFunc.Should().NotThrowAfter(waitTime, pollInterval);
 
             // Assert
-            await act.Should().ThrowAsync<ArgumentOutOfRangeException>()
+            await act.Should().Throw<ArgumentOutOfRangeException>()
                 .WithMessage("* value of pollInterval must be non-negative*");
         }
 
@@ -1077,10 +1077,10 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> action = () => func.Should()
-                .NotThrowAfterAsync(waitTime, pollInterval, "we passed valid arguments");
+                .NotThrowAfter(waitTime, pollInterval, "we passed valid arguments");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("*but found <null>*");
         }
 
@@ -1107,10 +1107,10 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> action = () => throwLongerThanWaitTime.Should(clock)
-                .NotThrowAfterAsync(waitTime, pollInterval, "we passed valid arguments");
+                .NotThrowAfter(waitTime, pollInterval, "we passed valid arguments");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Did not expect any exceptions after 2s because we passed valid arguments*");
         }
 
@@ -1137,10 +1137,10 @@ namespace FluentAssertions.Specs.Exceptions
 
             // Act
             Func<Task> action = () => throwLongerThanWaitTime.Should(clock)
-                .NotThrowAfterAsync(waitTime, pollInterval, "we passed valid arguments");
+                .NotThrowAfter(waitTime, pollInterval, "we passed valid arguments");
 
             // Assert
-            await action.Should().ThrowAsync<XunitException>()
+            await action.Should().Throw<XunitException>()
                 .WithMessage("Did not expect any exceptions after 2s because we passed valid arguments*");
         }
 
@@ -1166,10 +1166,10 @@ namespace FluentAssertions.Specs.Exceptions
             };
 
             // Act
-            Func<Task> act = () => throwShorterThanWaitTime.Should(clock).NotThrowAfterAsync(waitTime, pollInterval);
+            Func<Task> act = () => throwShorterThanWaitTime.Should(clock).NotThrowAfter(waitTime, pollInterval);
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().NotThrow();
         }
 
         [UIFact]
@@ -1194,10 +1194,10 @@ namespace FluentAssertions.Specs.Exceptions
             };
 
             // Act
-            Func<Task> act = () => throwShorterThanWaitTime.Should(clock).NotThrowAfterAsync(waitTime, pollInterval);
+            Func<Task> act = () => throwShorterThanWaitTime.Should(clock).NotThrowAfter(waitTime, pollInterval);
 
             // Assert
-            await act.Should().NotThrowAsync();
+            await act.Should().NotThrow();
         }
         #endregion
     }
